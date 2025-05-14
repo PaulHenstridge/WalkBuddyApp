@@ -1,7 +1,7 @@
+import { Location } from '@/app/types/location';
 import Link from 'next/link';
 import React from 'react'
 
-console.log('BASE URL →', process.env.NEXT_PUBLIC_APP_URL);
 
 const LocationsPage = async () => {
 
@@ -13,8 +13,8 @@ const LocationsPage = async () => {
   return ( <> 
     <div>LocationsPage</div>
     <ul>
-    {locations.map((loc: any) => (
-      <li key={loc.id}>{loc.name}</li>
+    {locations.map((loc: Location) => (
+      <li key={loc.id}>{loc.name} <Link href={`/admin/locations/${loc.id}`}>View Location</Link> </li>
     ))}
   </ul>
 
