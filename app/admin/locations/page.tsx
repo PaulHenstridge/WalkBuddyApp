@@ -1,4 +1,4 @@
-import { Location } from '@/app/types/location';
+import { Location } from '@/types/location';
 import Link from 'next/link';
 import React from 'react'
 
