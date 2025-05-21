@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { Owner } from '@/types/owner';
+
+type Props = { params: { id: string } }
+
 
 interface DogForm {
   name: string;
@@ -11,8 +14,14 @@ interface DogForm {
   notes: string
 }
 
-export default function NewDogPage() {
+export default  function NewDogPage() {
   const router = useRouter();
+  const params = useParams()
+  const base = process.env.NEXT_PUBLIC_APP_URL
+
+  const ownerId = params?.id as string;
+  console.log('OWNER IDEEEEEE', ownerId)
+
   const [form, setForm] = useState<DogForm>({ name: '', breed: '' , description:'', notes:''});
   const [errors, setErrors] = useState<Partial<DogForm & { form: string }>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -29,13 +38,16 @@ export default function NewDogPage() {
     e.preventDefault();
     if (!validate()) return;
 
+    const ownerRes = await fetch(`${base}/api/dbAPI/owners/${ownerId}`)
+    const owner = await ownerRes.json()
+    const formWithOwner = {...form ,owner}
+
     setSubmitting(true);
     try {
-        const base = process.env.NEXT_PUBLIC_APP_URL
         const res = await fetch(`${base}/api/dbAPI/dogs`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form),
+            body: JSON.stringify(formWithOwner),
         });
 
       if (!res.ok) {
@@ -92,7 +104,7 @@ export default function NewDogPage() {
       </div>
 
       <div>
-        <label htmlFor="notes" className="block font-medium">description</label>
+        <label htmlFor="notes" className="block font-medium">notes</label>
         <input
           id="notes"
           value={form.notes}

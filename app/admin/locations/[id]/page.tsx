@@ -7,7 +7,7 @@ interface LocationPageProps {
 }
 
 export default async function LocationPage({ params }: LocationPageProps) {
-  const { id } = params;  
+  const { id } = await params;  
   const base = process.env.NEXT_PUBLIC_APP_URL
   const res = await fetch(`${base}/api/dbAPI/locations/${id}`);
   if (!res.ok) throw new Error('Failed to fetch location');
