@@ -25,10 +25,10 @@ export default async function OwnerPage({ params }: OwnerPageProps) {
       <p>notes: {owner.notes}</p>
 
       <h3>{owner.name}'s dogs</h3>
-      {owner.dogs.map( (dog: Dog) => (<> 
-        <p>{dog.name}</p>
+      {owner.dogs.map( (dog: Dog) => (<div key={dog.id}> 
+        <p >{dog.name}</p>
         <Link href={`/admin/dogs/${dog.id}`}>View Dog</Link> 
-      </>
+      </div>
       
       ))}
     </div>

@@ -38,16 +38,12 @@ export default  function NewDogPage() {
     e.preventDefault();
     if (!validate()) return;
 
-    const ownerRes = await fetch(`${base}/api/dbAPI/owners/${ownerId}`)
-    const owner = await ownerRes.json()
-    const formWithOwner = {...form ,owner}
-
     setSubmitting(true);
     try {
         const res = await fetch(`${base}/api/dbAPI/dogs`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formWithOwner),
+            body: JSON.stringify({...form ,ownerId}),
         });
 
       if (!res.ok) {
