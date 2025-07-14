@@ -1,0 +1,16 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .section {
+    margin-top: 1rem;
+  }
