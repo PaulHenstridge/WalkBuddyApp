@@ -3,6 +3,7 @@
 import React, { useState, FormEvent } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { Owner } from '@/types/owner';
+import DateOfBirthInput from '@/components/DateOfBirthInput';
 
 type Props = { params: { id: string } }
 
@@ -11,7 +12,8 @@ interface DogForm {
   name: string;
   breed: string;
   description: string;
-  notes: string
+  dateOfBirth: string;
+  notes: string;
 }
 
 export default  function NewDogPage() {
@@ -22,7 +24,7 @@ export default  function NewDogPage() {
   const ownerId = params?.id as string;
   console.log('OWNER IDEEEEEE', ownerId)
 
-  const [form, setForm] = useState<DogForm>({ name: '', breed: '' , description:'', notes:''});
+  const [form, setForm] = useState<DogForm>({ name: '', breed: '' , description:'',dateOfBirth:'', notes:''});
   const [errors, setErrors] = useState<Partial<DogForm & { form: string }>>({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -37,6 +39,8 @@ export default  function NewDogPage() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!validate()) return;
+
+    console.log(form)
 
     setSubmitting(true);
     try {
@@ -98,6 +102,10 @@ export default  function NewDogPage() {
         />
         {errors.description && <p className="text-red-600 text-sm">{errors.description}</p>}
       </div>
+
+      <DateOfBirthInput 
+          value={form.dateOfBirth} 
+          onChange={(dob:string) => setForm({ ...form, dateOfBirth: dob })} />
 
       <div>
         <label htmlFor="notes" className="block font-medium">notes</label>

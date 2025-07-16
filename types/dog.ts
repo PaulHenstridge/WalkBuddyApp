@@ -6,6 +6,7 @@ export interface Dog {
     name: string
     breed: string
     description: string
+    dateOfBirth: string
     owner: Owner
     notes: string   
   }
