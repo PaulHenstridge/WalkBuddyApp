@@ -4,6 +4,7 @@ import React from 'react'
 import { Walk } from '@/types/walk';
 
 import PageShell from '@/components/AdminPageShell'
+import WalkCard from '@/components/cards/WalkCard';
 
 
 const WalksPage = async () => {
@@ -12,7 +13,7 @@ const WalksPage = async () => {
   const res = await fetch(`${base}/api/dbAPI/walks`);
   const walks = await res.json();
 
-  // split these into two components - a location viwer, and the link button
+ 
   return ( <PageShell
   title="Walks"
   actions={
@@ -22,11 +23,9 @@ const WalksPage = async () => {
   }
   > 
 
-    <ul>
     {walks.map((walk: Walk) => (
-      <li key={walk.id}>{walk.id} {walk.location.name}<Link href={`/admin/walks/${walk.id}`}>View Walk</Link> </li>
+      <WalkCard key={walk.id} walk={walk}/>
     ))}
-  </ul>
 
 
   </PageShell>

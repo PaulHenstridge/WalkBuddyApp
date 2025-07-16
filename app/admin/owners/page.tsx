@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import React from 'react'
 import PageShell from '@/components/AdminPageShell'
+import { Owner } from '@/types/owner';
+import OwnerCard from '@/components/cards/OwnerCard';
 
 const OwnersPage = async () => {
   const base = process.env.NEXT_PUBLIC_APP_URL
@@ -16,18 +18,10 @@ const OwnersPage = async () => {
         </Link>
       }
     >
-      <ul className="space-y-4">
-        {owners.map((owner: any) => (
-          <li key={owner.id} className="p-4 border rounded shadow-sm">
-            <div className="font-medium">{owner.name}</div>
-            <div className="text-sm text-gray-600">{owner.email}</div>
-            <div className="text-sm text-gray-600">{owner.phone}</div>
-            <Link href={`/admin/owners/${owner.id}`} className="text-blue-600 text-sm">
-              View Details
-            </Link>
-          </li>
+        {owners.map((owner: Owner) => (
+          <OwnerCard key={owner.id} owner={owner}/>
+ 
         ))}
-      </ul>
     </PageShell>
   )
 }

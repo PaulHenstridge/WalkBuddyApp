@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react'
 
 import PageShell from '@/components/AdminPageShell'
+import DogCard from '@/components/cards/DogCard';
 
 
 
@@ -20,17 +21,11 @@ const DogsPage = async () => {
         </Link>
       }
     >
-      <ul className="space-y-4">
+  
         {dogs.map((dog: any) => (
-          <li key={dog.id} className="p-4 border rounded shadow-sm">
-            <div className="font-medium">{dog.name} ({dog.breed})</div>
-            <div className="text-sm text-gray-600">Age: {dog.age}</div>
-            <Link href={`/admin/dogs/${dog.id}`} className="text-blue-600 text-sm">
-              View Details
-            </Link>
-          </li>
+           <DogCard key={dog.id} dog={dog} />
         ))}
-      </ul>
+
     </PageShell>
   )
 }

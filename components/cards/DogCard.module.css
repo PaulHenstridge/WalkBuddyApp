@@ -1,0 +1,23 @@
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: #fff;
+  }
+  .header {
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  .subText {
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 0.25rem;
+  }
+  .link {
+    margin-top: 0.5rem;
+    display: inline-block;
+    color: #0070f3;
+    font-size: 0.9rem;
+  }
+  
