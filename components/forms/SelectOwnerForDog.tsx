@@ -1,9 +1,9 @@
-// components/SelectOwnerForDog.tsx
 'use client';
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Owner } from '@/types/owner';
+import styles from './SelectOwnerForDog.module.css';
 
 interface SelectOwnerForDogProps {
   owners: Owner[];
@@ -19,30 +19,29 @@ export default function SelectOwnerForDog({ owners }: SelectOwnerForDogProps) {
 
   function handleProceed() {
     if (selectedOwnerId !== '') {
-      // Redirect to the “new dog for this owner” route
       router.push(`/admin/owners/${selectedOwnerId}/dogs/new`);
     }
   }
 
   function handleAddOwner() {
-    // Redirect to create a new owner
     router.push('/admin/owners/new');
   }
 
-  return (
-    <div className="max-w-md mx-auto p-4 space-y-6">
-      <h2 className="text-xl font-semibold">Attach a Dog to an Existing Owner</h2>
+  const isDisabled = selectedOwnerId === '';
 
-      {/* Owner dropdown */}
+  return (
+    <div className={styles.container}>
+      <h2 className={styles.heading}>Attach a Dog to an Existing Owner</h2>
+
       <div>
-        <label htmlFor="ownerSelect" className="block font-medium">
+        <label htmlFor="ownerSelect" className={styles.label}>
           Select Owner
         </label>
         <select
           id="ownerSelect"
-          value={selectedOwnerId === '' ? '' : String(selectedOwnerId)}
+          value={isDisabled ? '' : String(selectedOwnerId)}
           onChange={handleChange}
-          className="mt-1 block w-full border px-2 py-1"
+          className={styles.select}
         >
           <option value="">— Choose an owner —</option>
           {owners.map(owner => (
@@ -53,18 +52,12 @@ export default function SelectOwnerForDog({ owners }: SelectOwnerForDogProps) {
         </select>
       </div>
 
-      {/* Buttons */}
-      <div className="flex items-center space-x-4">
+      <div className={styles.buttonRow}>
         <button
           type="button"
           onClick={handleProceed}
-          disabled={selectedOwnerId === ''}
-          className={`
-            px-4 py-2 rounded 
-            ${selectedOwnerId === '' 
-              ? 'bg-gray-300 text-gray-700 cursor-not-allowed' 
-              : 'bg-blue-600 text-white hover:bg-blue-700'}
-          `}
+          disabled={isDisabled}
+          className={`${styles.button} ${styles.buttonNext} ${isDisabled ? styles.disabled : ''}`}
         >
           Next: Add Dog for Selected Owner
         </button>
@@ -72,7 +65,7 @@ export default function SelectOwnerForDog({ owners }: SelectOwnerForDogProps) {
         <button
           type="button"
           onClick={handleAddOwner}
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          className={`${styles.button} ${styles.buttonAlt}`}
         >
           OR Create New Owner
         </button>

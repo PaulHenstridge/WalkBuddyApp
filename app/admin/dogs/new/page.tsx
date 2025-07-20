@@ -1,5 +1,5 @@
 // app/admin/dogs/new/page.tsx
-import SelectOwnerForDog from '@/components/SelectOwnerForDog';
+import SelectOwnerForDog from '@/components/forms/SelectOwnerForDog';
 import { Owner } from '@/types/owner';
 
 export default async function NewDogEntry() {

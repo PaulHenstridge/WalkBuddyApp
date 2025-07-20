@@ -1,5 +1,5 @@
 
-import NewWalkForm from '@/components/NewWalkForm';
+import NewWalkForm from '@/components/forms/NewWalkForm';
 import { Location } from '@/types/location';
 import { Dog } from '@/types/dog';
 
