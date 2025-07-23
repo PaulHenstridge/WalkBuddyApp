@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Dog } from '@/types/dog';
+import PostWalkOptions from '@/components/PostWalkOptions';
 
 interface WalkPageProps {
   params: {
@@ -30,9 +31,10 @@ export default async function WalkPage({ params }: WalkPageProps) {
         <Link href={`/admin/dogs/${dog.id}`}>View Dog</Link> 
       </div>
       ))}
-       
+
     </div>
 
+    <PostWalkOptions walkId={walk.id} isComplete={walk.complete}/>
 
   </>
 
