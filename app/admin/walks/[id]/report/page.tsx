@@ -1,9 +1,6 @@
-import React from 'react'
+import WalkReportForm from '@/components/forms/WalkReportForm';
 
-const WalkReportPage = () => {
-  return (
-    <div>Create a new walk report here</div>
-  )
+export default async function WalkReportPage({ params }: { params: { id: string } }) {
+  const walkId = await params.id;
+  return <WalkReportForm walkId={walkId} />;
 }
-
-export default WalkReportPage

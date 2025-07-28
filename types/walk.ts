@@ -1,5 +1,6 @@
 import { Dog } from "./dog"
 import { Location } from "./location"
+// import {DogReport } from "./"
 
 
 export interface Walk{
@@ -8,5 +9,6 @@ export interface Walk{
     location: Location
     dogs: Dog[]
     complete:boolean
+    // report: DogReport
 
 }

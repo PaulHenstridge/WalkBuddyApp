@@ -1,31 +1,49 @@
-'use client'
+'use client';
 
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import React from 'react'
+import React from 'react';
 
 type PostWalkParams = {
-    walkId: string;
-    isComplete: boolean;
-}
+  walkId: string;
+  isComplete: boolean;
+};
 
-const onComplete = async (id: string) => {
-    const base = process.env.NEXT_PUBLIC_APP_URL
-    const res = await fetch(`${base}/api/dbAPI/walks/${id}/complete`)
-    console.log('REZZZ->', res)
-    const completedWalk = await res.json()
-}
+const PostWalkOptions = ({ walkId, isComplete }: PostWalkParams) => {
+  const router = useRouter(); // ✅ valid use of hook
 
-const PostWalkOptions = ({walkId, isComplete}: PostWalkParams) => {
+  const onComplete = async (id: string) => {
+    try {
+      const res = await fetch(`/api/dbAPI/walks/${id}/complete`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error('Error marking walk complete:', text);
+        return;
+      }
+
+      const completedWalk = await res.json();
+      console.log('Completed Walk:', completedWalk);
+      router.push(`/admin/walks/${id}`);
+    } catch (err) {
+      console.error('Network or parsing error:', err);
+    }
+  };
+
   return (
     <>
-    {!isComplete ?
-    <button  onClick={() => onComplete(walkId)}>Mark complete</button>
-    :
-    <Link href={`/admin/walks/${walkId}report`}> Add a walk report</Link>
-    }
-    
+      {!isComplete ? (
+        <button onClick={() => onComplete(walkId)}>Mark complete</button>
+      ) : (
+        <Link href={`/admin/walks/${walkId}/report`}>Add a walk report</Link>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default PostWalkOptions
+export default PostWalkOptions;

@@ -5,6 +5,8 @@ const SPRING_BASE = process.env.SPRING_BASE_URL ?? 'http://localhost:8080';
 export async function PATCH(_: NextRequest, { params }: { params: { id: string } }) {
   const walkId = params.id;
 
+  console.log('WOOWOOWOO PATCH ROUTE HIT', walkId);
+
   try {
     const res = await fetch(`${SPRING_BASE}/walks/${walkId}/complete`, {
       method: 'PATCH',

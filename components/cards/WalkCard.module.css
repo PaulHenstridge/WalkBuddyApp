@@ -1,25 +1,33 @@
 .card {
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
     padding: 1rem;
-    background: #eef6ff;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .complete {
+    background-color: #e0f7e9; /* light green */
+  }
+  
+  .pending {
+    background-color: #fff3cd; /* light yellow */
   }
   
   .header {
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: bold;
+    font-size: 1.2rem;
   }
   
   .subText {
-    font-size: 0.9rem;
-    color: #333;
+    color: #555;
     margin-top: 0.25rem;
   }
   
   .link {
-    margin-top: 0.5rem;
     display: inline-block;
+    margin-top: 0.75rem;
     color: #0070f3;
-    font-size: 0.9rem;
+    text-decoration: underline;
   }
   
