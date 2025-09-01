@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(reportText),
+      body: reportText,
     });
 
     if (!res.ok) {

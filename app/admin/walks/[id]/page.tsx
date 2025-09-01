@@ -22,7 +22,7 @@ export default async function WalkPage({ params }: WalkPageProps) {
   return (<>
       <div>
       <h1>id: {walk.id}</h1>
-      <p>Location: {walk.location.name}</p>
+      <p>Location: {walk.locationName}</p>
       <p>time: {walk.dateTime}</p>
 
       <h3>Walk {walk.id}'s dogs</h3>
@@ -31,6 +31,7 @@ export default async function WalkPage({ params }: WalkPageProps) {
         <Link href={`/admin/dogs/${dog.id}`}>View Dog</Link> 
       </div>
       ))}
+      <h4>Walk Report: {walk.report}</h4>
 
     </div>
 

@@ -10,7 +10,7 @@ export default function WalkCard({ walk }: { walk: Walk }) {
   return (
     <div className={cardClass}>
       <div className={styles.header}>Walk ID: {walk.id}</div>
-      <div className={styles.subText}>Location: {walk.location.name}</div>
+      <div className={styles.subText}>Location: {walk.locationName}</div>
       <div className={styles.subText}>Time: {new Date(walk.dateTime).toLocaleString()}</div>
       <div className={styles.subText}> {walk.complete ? "Complete" : "Pending"}</div>
       

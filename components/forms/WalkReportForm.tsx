@@ -29,7 +29,7 @@ export default function WalkReportForm({ walkId }: WalkReportFormProps) {
       const res = await fetch(`${base}/api/dbAPI/walks/${walkId}/report`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(notes),
+        body: notes,
       });
 
       if (!res.ok) {

@@ -5,10 +5,10 @@ import { Location } from "./location"
 
 export interface Walk{
     id: string
+    locationId: String
+    locationName:String
     dateTime: string
-    location: Location
     dogs: Dog[]
     complete:boolean
-    // report: DogReport
-
+    report: String
 }
