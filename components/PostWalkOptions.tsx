@@ -6,6 +6,9 @@ import React from 'react';
 
 import MarkComplete from './MarkComplete';
 import RateWalk from './RateWalk';
+import WalkRatingForm from './forms/WalkRatingForm';
+
+
 type PostWalkParams = {
   walkId: string;
   isComplete: boolean;
@@ -20,7 +23,7 @@ const PostWalkOptions = ({ walkId, isComplete }: PostWalkParams) => {
         <MarkComplete walkId={walkId}  >Mark complete</MarkComplete>
       ) : (<>
         <Link href={`/admin/walks/${walkId}/report`}>Add a walk report</Link>
-        <RateWalk walkId={walkId}/>
+        <WalkRatingForm walkId={walkId}/>
         </>
       )}
     </>
