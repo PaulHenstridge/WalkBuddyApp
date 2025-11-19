@@ -31,11 +31,11 @@ export default async function WalkPage({ params }: WalkPageProps) {
         <Link href={`/admin/dogs/${dog.id}`}>View Dog</Link> 
       </div>
       ))}
-      <h4>Walk Report: {walk.report}</h4>
+      { walk.report && <h4>Walk Report: {walk.report}</h4>}
 
     </div>
 
-    <PostWalkOptions walkId={walk.id} isComplete={walk.complete}/>
+    <PostWalkOptions walkId={walk.id} defaultRating={walk.rating} isComplete={walk.complete}/>
 
   </>
 

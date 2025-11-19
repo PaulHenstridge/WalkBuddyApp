@@ -3,11 +3,12 @@ import { NextRequest } from 'next/server';
 const SPRING_BASE = process.env.SPRING_BASE_URL ?? 'http://localhost:8080';
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
-  const walkId = params.id;
+  const walkId = await params.id;
 
   try {
     // 1️⃣ Read the JSON body (this will be a simple string like "GREAT")
     const ratingValue = await req.json();
+    console.log("ratingValue in rating route:", ratingValue)
 
     // 2️⃣ Forward it to Spring
     const res = await fetch(`${SPRING_BASE}/walks/${walkId}/rating`, {
@@ -27,6 +28,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     // 4️⃣ Return success to client
     const walkDTO = await res.json();
+    console.log('response in rating route', walkDTO)
+
     return Response.json(walkDTO);
   } catch (err) {
     console.error('[POST] /walks/[id]/rating error:', err);

@@ -1,34 +1,44 @@
 // components/RatingSelector.tsx
 import React from 'react';
-
-export type RatingLevel = 'GREAT' | 'OK' | 'NOT_OK';
+import { RATING_LEVELS, type RatingLevel } from '@/types/rating'; // optional shared module
 
 type RatingSelectorProps = {
-  value: RatingLevel | '';                 // current selection from parent
-  onChange: (val: RatingLevel) => void;    // tell parent when it changes
+  value: RatingLevel | '';
+  onChange: (val: RatingLevel) => void;
   disabled?: boolean;
-  id?: string;                             // optional for label association
+  id?: string;
+  name?: string;
 };
 
-const OPTIONS: RatingLevel[] = ['GREAT', 'OK', 'NOT_OK'];
-
-export default function RatingSelector({ value, onChange, disabled, id }: RatingSelectorProps) {
+export default function RatingSelector({
+  value,
+  onChange,
+  disabled,
+  id,
+  name = 'rating',
+}: RatingSelectorProps) {
   return (
-    <fieldset id={id}>
-      <legend>Rating</legend>
-      {OPTIONS.map(opt => (
-        <label key={opt} style={{ display: 'block', cursor: disabled ? 'not-allowed' : 'pointer' }}>
-          <input
-            type="radio"
-            name="rating"
-            value={opt}
-            checked={value === opt}
-            onChange={() => onChange(opt)}
-            disabled={disabled}
-          />
-          {opt}
-        </label>
-      ))}
-    </fieldset>
+    <>
+      {value && <h1>Rating: {value}</h1>}
+
+      {!value && (
+        <fieldset id={id}>
+          <legend>Rating</legend>
+          {RATING_LEVELS.map((opt) => (
+            <label key={opt} style={{ display: 'block', cursor: disabled ? 'not-allowed' : 'pointer' }}>
+              <input
+                type="radio"
+                name={name}
+                value={opt}
+                checked={value === opt}
+                onChange={() => onChange(opt)}
+                disabled={disabled}
+              />
+              {opt}
+            </label>
+          ))}
+        </fieldset>
+      )}
+    </>
   );
 }

@@ -13,6 +13,8 @@ const WalksPage = async () => {
   const res = await fetch(`${base}/api/dbAPI/walks`);
   const walks = await res.json();
 
+
+
  
   return ( <PageShell
   title="Walks"

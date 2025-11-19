@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import RatingSelector, { RatingLevel } from '@/components/RatingSelector';
+import RatingSelector from '@/components/RatingSelector';
+import type { RatingLevel } from '@/types/rating'; // or from your shared module
 
 interface WalkRatingFormProps {
   walkId: string;
-  defaultRating?: RatingLevel; // optional default if you have one
+  defaultRating?: RatingLevel; // may be undefined if unrated
 }
 
 export default function WalkRatingForm({ walkId, defaultRating }: WalkRatingFormProps) {
@@ -14,32 +15,36 @@ export default function WalkRatingForm({ walkId, defaultRating }: WalkRatingForm
   const [rating, setRating] = useState<RatingLevel | ''>(defaultRating ?? '');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [saved, setSaved] = useState(false); // tiny UX flag
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  // keep local state in sync if parent re-fetches
+  useEffect(() => {
+    setRating(defaultRating ?? '');
+  }, [defaultRating]);
 
-    if (!rating) {
-      setError('Rating is required');
-      return;
-    }
-
+  async function submitRating(val: RatingLevel) {
+    if (submitting) return;
     setSubmitting(true);
     setError('');
+    setSaved(false);
 
     try {
       const res = await fetch(`/api/dbAPI/walks/${walkId}/rating`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        // IMPORTANT: send a JSON string literal so Spring/Jackson can bind to enum
-        body: JSON.stringify(rating), // e.g. "GREAT"
+        body: JSON.stringify(val), // "GREAT" | "OK" | "NOT_OK"
       });
 
       if (!res.ok) {
         const payload = await res.json().catch(() => ({}));
         setError(payload.error || 'Server error while saving rating');
-      } else {
-        router.push(`/admin/walks/${walkId}`);
+        return;
       }
+
+      // success: reflect saved value; optionally refresh server components
+      setRating(val);
+      setSaved(true);
+      router.refresh(); //  if  page fetches data server-side
     } catch {
       setError('Network error. Please try again.');
     } finally {
@@ -47,20 +52,35 @@ export default function WalkRatingForm({ walkId, defaultRating }: WalkRatingForm
     }
   }
 
+  function handleSelect(val: RatingLevel) {
+    setRating(val);      // update UI immediately
+    void submitRating(val); // fire-and-forget; uses val directly (not stale state)
+  }
+
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={(e) => e.preventDefault()} noValidate>
       {error && <p role="alert">{error}</p>}
+
+      {/* Show a small status line if you like */}
+      {submitting && <p>Saving…</p>}
+      {saved && !submitting && <p>Saved.</p>}
 
       <RatingSelector
         value={rating}
-        onChange={setRating}
+        onChange={handleSelect}
         disabled={submitting}
         id="walk-rating"
       />
 
-      <button type="submit" disabled={submitting}>
-        {submitting ? 'Submitting…' : 'Submit Walk Rating'}
-      </button>
+      {/* Optional: keep a visible Change/Reset */}
+      {rating && !submitting && (
+        <button
+          type="button"
+          onClick={() => { setRating(''); setSaved(false); setError(''); }}
+        >
+          Change
+        </button>
+      )}
     </form>
   );
 }
